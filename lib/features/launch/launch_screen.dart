@@ -22,8 +22,6 @@ class _LaunchScreenState extends State<LaunchScreen> {
 
   Future<void> checkAuth() async {
     final user =  await context.read <AuthCubit>().checkUser();
-    print("fkaslfgaslfgakjgaasfasfgasfasgasgsagasgsagljkghlakghlakshga");
-    print(user);
     await Future.delayed(const Duration(seconds: 1));
     if (mounted) {
       Navigator.pushReplacementNamed(

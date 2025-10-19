@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1063051598461",
+    "project_id": "weight-tracker-app-7f04f",
+    "storage_bucket": "weight-tracker-app-7f04f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1063051598461:android:f1164accc425b6b549af14",
+        "android_client_info": {
+          "package_name": "com.example.weight_tracker_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkrLKZWEcpeXE2VwPaZ1530QTT-tobQvM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

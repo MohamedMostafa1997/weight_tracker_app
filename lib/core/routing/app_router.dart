@@ -13,13 +13,18 @@ class AppRouter {
   static Route? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.launch:
-        return MaterialPageRoute(builder: (_) => const LaunchScreen());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => AuthCubit(AuthRepo()),
+            child:  LaunchScreen(),
+          ),
+        );
 
       case Routes.auth:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (_) => AuthCubit(AuthRepo()),
-            child: const AuthScreen(),
+            child:  AuthScreen(),
           ),
         );
 
@@ -33,7 +38,7 @@ class AppRouter {
                 create: (_) => WeightCubit(WeightRepo()),
               ),
             ],
-            child: const WeightScreen(),
+            child:  WeightScreen(),
           ),
         );
 

@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weight_tracker_app/core/routing/app_router.dart';
 import 'package:weight_tracker_app/core/routing/routes.dart';
-import 'package:weight_tracker_app/observer/observer.dart';
+import 'package:weight_tracker_app/core/observer/observer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

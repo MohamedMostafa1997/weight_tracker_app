@@ -7,7 +7,6 @@ import 'package:weight_tracker_app/features/weight/business_logic/cubit/weight_c
 import 'package:weight_tracker_app/features/weight/widgets/weight_input_card.dart';
 import 'package:weight_tracker_app/features/weight/widgets/weight_tile_card.dart';
 
-
 class WeightScreen extends StatefulWidget {
   const WeightScreen({super.key});
   @override
@@ -22,9 +21,62 @@ class _WeightScreenState extends State<WeightScreen> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-    context.read<WeightCubit>().startListening();
-  });
+      context.read<WeightCubit>().startListening();
+    });
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xFFF6F5FA),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: Text(
+          'My Weight Progress',
+          style: TextStyle(color: Colors.black),
+        ),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout, color: Colors.black54),
+            onPressed: () => signOut(),
+          ),
+        ],
+      ),
+      body: BlocBuilder<WeightCubit, WeightState>(
+        builder: (context, state) {
+          if (state is WeightLoading) {
+            return Center(child: CircularProgressIndicator());
+          } else if (state is WeightLoaded) {
+            final list = state.weights;
+            return Column(
+              children: [
+                SizedBox(height: 20),
+                WeightInputCard(),
+
+                SizedBox(height: 10),
+                Expanded(
+                  child: list.isEmpty
+                      ? Center(
+                          child: Text('No weights yet. Add your first weight.'),
+                        )
+                      : ListView.builder(
+                          itemCount: list.length,
+                          itemBuilder: (context, i) =>
+                              WeightTileCard(entry: list[i]),
+                        ),
+                ),
+                SizedBox(height: 12),
+              ],
+            );
+          } else if (state is WeightFailure) {
+            return Center(child: Text('Error: ${state.message}'));
+          }
+          return SizedBox();
+        },
+      ),
+    );
   }
 
   void signOut() async {
@@ -34,54 +86,4 @@ class _WeightScreenState extends State<WeightScreen> {
       Navigator.pushReplacementNamed(context, Routes.auth);
     }
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor:  Color(0xFFF6F5FA),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title:  Text('My Weight Progress', style: TextStyle(color: Colors.black)),
-        centerTitle: true,
-        actions: [
-        
-          IconButton(
-            icon:  Icon(Icons.logout, color: Colors.black54),
-            onPressed: () => signOut()
-          ),
-        ],
-      ),
-      body: BlocBuilder<WeightCubit, WeightState>(
-        builder: (context, state) {
-          if (state is WeightLoading) {
-            return  Center(child: CircularProgressIndicator());
-          } else if (state is WeightLoaded) {
-            final list = state.weights;
-            return Column(
-              children: [
-                 SizedBox(height: 20),
-                 WeightInputCard(),
-                 
-                 SizedBox(height: 10),
-                Expanded(
-                  child: list.isEmpty
-                      ?  Center(child: Text('No weights yet. Add your first weight.'))
-                      : ListView.builder(
-                          itemCount: list.length,
-                          itemBuilder: (context, i) => WeightTileCard(entry: list[i]),
-                        ),
-                ),
-                 SizedBox(height: 12),
-              ],
-            );
-          } else if (state is WeightFailure) {
-            return Center(child: Text('Error: ${state.message}'));
-          }
-          return  SizedBox();
-        },
-      ),
-    );
-  }
 }
-
